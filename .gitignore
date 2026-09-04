@@ -18,6 +18,12 @@ tmp/
 scripts/fetch_dataset_helpers/my-rfc-mirror/
 scripts/**/__pycache__
 
+# CI/CD directories (except .github)
+.commandcode/taste
+.forgejo/workflows
+.open-dynamic-workflow
+.opencode
+
 # OS generated files
 .DS_Store
 .DS_Store?
