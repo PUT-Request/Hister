@@ -19,8 +19,8 @@ scripts/fetch_dataset_helpers/my-rfc-mirror/
 scripts/**/__pycache__
 
 # CI/CD directories (except .github)
-.commandcode/taste
-.forgejo/workflows
+.commandcode/
+.forgejo/
 .open-dynamic-workflow
 .opencode
 
