@@ -1,0 +1,105 @@
+name: PR Lint
+
+on:
+  pull_request:
+
+jobs:
+  golangci-lint:
+    name: golangci-lint
+    runs-on: codeberg-tiny
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Check for Go changes
+        id: changes
+        run: |
+          FILES=$(git diff --name-only origin/${{ forgejo.base_ref }}...HEAD -- '*.go' 'go.mod' 'go.sum')
+          if [ -z "$FILES" ]; then
+            echo "skip=true" >> "$FORGEJO_OUTPUT"
+          else
+            echo "skip=false" >> "$FORGEJO_OUTPUT"
+          fi
+
+      - name: Set up Go
+        if: steps.changes.outputs.skip != 'true'
+        uses: actions/setup-go@v6.3.0
+        with:
+          go-version: 'stable'
+
+      - name: Set up Node
+        if: steps.changes.outputs.skip != 'true'
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: latest
+
+      - name: Build SPA
+        if: steps.changes.outputs.skip != 'true'
+        run: npm ci && sh webui/build.sh
+
+      - name: Run golangci-lint
+        if: steps.changes.outputs.skip != 'true'
+        uses: golangci/golangci-lint-action@v9.2.0
+
+  npm-format:
+    name: NPM formatting
+    runs-on: codeberg-tiny
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Check for NPM-related changes
+        id: changes
+        run: |
+          FILES=$(git diff --name-only origin/${{ forgejo.base_ref }}...HEAD -- 'webui/**' 'package.json' 'package-lock.json' 'prettier.config.js')
+          if [ -z "$FILES" ]; then
+            echo "skip=true" >> "$FORGEJO_OUTPUT"
+          else
+            echo "skip=false" >> "$FORGEJO_OUTPUT"
+          fi
+
+      - name: Set up Node
+        if: steps.changes.outputs.skip != 'true'
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: latest
+
+      - name: Install dependencies
+        if: steps.changes.outputs.skip != 'true'
+        run: npm ci
+
+      - name: Run format
+        if: steps.changes.outputs.skip != 'true'
+        run: npm run format
+
+      - name: Check for formatting changes
+        if: steps.changes.outputs.skip != 'true'
+        run: |
+          if [ -n "$(git diff)" ]; then
+            echo "::error::NPM files are not formatted. Run 'npm run format' locally"
+            git diff
+            exit 1
+          fi
+
+  no-merge-commits:
+    name: No merge commits
+    runs-on: codeberg-tiny
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0
+          ref: ${{ forgejo.event.pull_request.head.sha }}
+
+      - name: Check for merge commits
+        run: |
+          MERGE_COMMITS=$(git log --merges --oneline origin/${{ forgejo.base_ref }}..HEAD)
+          if [ -n "$MERGE_COMMITS" ]; then
+            echo "::error::PR contains merge commits. Please rebase instead of merging"
+            echo "$MERGE_COMMITS"
+            exit 1
+          fi

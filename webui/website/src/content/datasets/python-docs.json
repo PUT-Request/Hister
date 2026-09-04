@@ -1,0 +1,12 @@
+{
+  "name": "Python Standard Library Documentation",
+  "description": "Documentation pages for the Python 3 standard library from docs.python.org.",
+  "downloadUrl": "/data/python-docs.json.7z",
+  "image": null,
+  "tags": ["python", "documentation", "reference"],
+  "license": "PSF-2.0",
+  "author": "Python Software Foundation",
+  "diskSizeBytes": null,
+  "documentCount": 326,
+  "latestUpdate": "2026.06.24"
+}

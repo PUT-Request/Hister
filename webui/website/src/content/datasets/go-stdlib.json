@@ -1,0 +1,12 @@
+{
+  "name": "Golang Standard Library Documentation",
+  "description": "Documentation pages for all the Golang standard library packages. (Internal packages are excluded). Go version: 1.26.4. ",
+  "downloadUrl": "/data/go-stdlib.json.7z",
+  "image": null,
+  "tags": ["golang", "documentation"],
+  "license": "CC-BY-4.0",
+  "author": "Go community",
+  "diskSizeBytes": null,
+  "documentCount": 208,
+  "latestUpdate": "2026.06.06"
+}

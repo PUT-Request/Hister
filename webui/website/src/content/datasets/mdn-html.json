@@ -1,0 +1,12 @@
+{
+  "name": "MDN HTML Reference",
+  "description": "Mozilla Developer Resources - This HTML reference describes all elements and attributes of HTML, including global attributes that apply to all elements",
+  "downloadUrl": "/data/mdn-html.json.7z",
+  "image": null,
+  "tags": ["HTML", "reference"],
+  "license": "CC-BY-SA 2.5",
+  "author": "Mozilla",
+  "diskSizeBytes": null,
+  "documentCount": 235,
+  "latestUpdate": "2026.06.02"
+}

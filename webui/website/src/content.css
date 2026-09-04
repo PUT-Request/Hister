@@ -1,0 +1,173 @@
+.content {
+  max-width: 48rem;
+  line-height: 1.75;
+  font-family: 'Inter', sans-serif;
+}
+
+.content.doc-content {
+  max-width: none;
+}
+
+.content > :first-child {
+  margin-top: 0;
+}
+
+.content h1,
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  color: var(--text-primary);
+}
+
+.content h2,
+.content h3,
+.content h4 {
+  scroll-margin-top: 5rem;
+}
+
+.content h1 {
+  font-size: 2.5rem;
+  letter-spacing: -0.03em;
+  margin-top: 0;
+}
+
+.content h2 {
+  font-size: 1.75rem;
+}
+
+.content h3 {
+  font-size: 1.375rem;
+}
+
+.content p {
+  margin-bottom: 1.25em;
+  color: var(--text-secondary);
+}
+
+.content a {
+  color: var(--hister-indigo);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  font-weight: 500;
+}
+
+.content a:hover {
+  color: var(--hister-coral);
+}
+
+.content ul,
+.content ol {
+  margin-bottom: 1.25em;
+  padding-left: 1.5em;
+  color: var(--text-secondary);
+}
+
+.content li {
+  margin-bottom: 0.5em;
+}
+
+.content ul {
+  list-style-type: disc;
+}
+
+.content ul li::marker {
+  color: var(--hister-indigo);
+}
+
+.content ol {
+  list-style-type: decimal;
+}
+
+.content strong {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.content code {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.875em;
+  background-color: var(--muted-surface);
+  padding: 0.15em 0.4em;
+  border: 1px solid var(--border-brand);
+}
+
+.content pre {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5em;
+  border: 3px solid var(--brutal-border);
+  box-shadow: 6px 6px 0 var(--brutal-shadow);
+  overflow-x: auto;
+}
+
+.content pre code {
+  background: none;
+  padding: 0;
+  border: none;
+  font-size: inherit;
+}
+
+.content blockquote {
+  border-left: 4px solid var(--hister-indigo);
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1.25em;
+  background-color: var(--brutal-card);
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.content table {
+  display: table;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 1.5em;
+  border-collapse: collapse;
+  border: 3px solid var(--brutal-border);
+}
+
+.content th {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background-color: var(--text-primary);
+  color: var(--brutal-bg);
+  border: 2px solid var(--brutal-border);
+}
+
+.content td {
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--brutal-border);
+}
+
+.content hr {
+  margin: 2em 0;
+  border: none;
+  border-top: 3px solid var(--brutal-border);
+}
+
+.content img {
+  max-width: 100%;
+  border: 3px solid var(--brutal-border);
+  box-shadow: 6px 6px 0 var(--brutal-shadow);
+  margin-bottom: 1.5em;
+  cursor: zoom-in;
+}
+
+.content a img {
+  cursor: pointer;
+}
+
+.content.doc-content summary {
+  cursor: pointer;
+  font-size: 1.5em;
+}

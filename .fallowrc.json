@@ -1,0 +1,59 @@
+{
+  "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
+  "entry": [
+    "webui/app/src/routes/**/+*.svelte",
+    "webui/app/src/routes/**/+*.ts",
+    "webui/website/src/routes/**/+*.svelte",
+    "webui/website/src/routes/**/+*.ts",
+    "webui/ext/src/background/background.ts",
+    "webui/ext/src/content/content.ts",
+    "webui/ext/src/popup/popup.ts",
+    "webui/ext/src/options/options.ts",
+    "webui/ext/svelte.config.js"
+  ],
+  "ignorePatterns": [
+    "webui/package.json",
+    "webui/ext/src/popup/popup.html",
+    "webui/ext/src/options/options.html"
+  ],
+  "ignoreDependencies": [
+    "@fontsource/fira-code",
+    "@fontsource/inter",
+    "@fontsource/outfit",
+    "@fontsource/space-grotesk",
+    "@tailwindcss/typography"
+  ],
+  "ignoreExports": [{ "file": "webui/components/src/lib/components/ui/**", "exports": ["*"] }],
+  "ignoreExportsUsedInFile": true,
+  "rules": {
+    "duplicate-exports": "warn",
+    "unresolved-imports": "warn",
+    "unused-class-members": "off",
+    "circular-dependencies": "off"
+  },
+  "duplicates": {
+    "mode": "weak",
+    "minTokens": 50,
+    "minLines": 20,
+    "threshold": 3,
+    "ignoreImports": true
+  },
+  "health": {
+    "maxCyclomatic": 20,
+    "maxCognitive": 25,
+    "maxCrap": 30,
+    "suggestInlineSuppression": true
+  },
+  "audit": {
+    "gate": "new-only"
+  },
+  "overrides": [
+    {
+      "files": ["webui/components/src/lib/components/ui/**"],
+      "rules": {
+        "unused-exports": "off",
+        "unused-types": "off"
+      }
+    }
+  ]
+}

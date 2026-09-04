@@ -1,0 +1,54 @@
+name: Release binaries
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: forgejo.repository == 'asciimoo/hister'
+    name: GoReleaser build
+    runs-on: runner_name
+    container:
+      image: goreleaser/goreleaser-cross:v1.25.5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: 'stable'
+
+      - name: Set up Node
+        uses: actions/setup-node@v6.4.0
+        with:
+          node-version: latest
+
+        # Mark the checkout as 'safe' despite being owned by `root`
+      - run: git config --global --add safe.directory "$FORGJO_WORKSPACE"
+      - run: git config --global --add safe.directory "$(pwd)"
+
+      - name: Generate front-end
+        run: go generate ./...
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@master
+        with:
+          version: latest
+          args: release --clean
+          workdir: .
+        env:
+          FORGEJO_TOKEN: ${{ secrets.GORELEASER_TOKEN }}
+
+      - name: Upload assets
+        uses: actions/upload-artifact@v7
+        with:
+          name: hister
+          path: dist/*
+        env:
+          FORGEJO_TOKEN: ${{ secrets.GORELEASER_TOKEN }}

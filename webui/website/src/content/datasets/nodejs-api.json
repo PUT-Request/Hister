@@ -1,0 +1,12 @@
+{
+  "name": "Node.js API Documentation",
+  "description": "Documentation pages for the Node.js API reference from nodejs.org.",
+  "downloadUrl": "/data/nodejs-api.json.7z",
+  "image": null,
+  "tags": ["javascript", "documentation", "reference"],
+  "license": "MIT",
+  "author": "OpenJS Foundation and Node.js contributors",
+  "diskSizeBytes": null,
+  "documentCount": 69,
+  "latestUpdate": "2026.06.24"
+}

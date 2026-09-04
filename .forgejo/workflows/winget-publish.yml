@@ -1,0 +1,19 @@
+name: Publish to WinGet
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    if: forgejo.repository == 'asciimoo/hister'
+    name: Publish to WinGet
+    runs-on: runner_name
+    steps:
+      - uses: https://github.com/vedantmgoyal9/winget-releaser@main
+        with:
+          identifier: asciimoo.hister
+          installers-regex: '\.exe$'
+          token: ${{ secrets.GORELEASER_TOKEN }}

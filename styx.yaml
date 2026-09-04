@@ -1,0 +1,22 @@
+prompt: |
+  Review all Go files in this repository for common issues:
+  - Unhandled errors
+  - Race conditions
+  - Missing documentation on exported functions
+  - Code duplication
+  - Inefficient algorithms or data structures
+  - Security vulnerabilities
+  - Incorrect error handling patterns
+  - Missing unit tests for critical functions
+  
+  For each issue found, create a fix on a new branch.
+  Summarize all changes at the end.
+
+mode: read_write
+
+api_endpoint: ${STYX_API_ENDPOINT}
+api_key: ${STYX_API_KEY}
+model: nemotron-3.5-lightning-free
+max_context: 256000
+
+max_working_time: 30m

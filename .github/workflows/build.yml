@@ -1,0 +1,110 @@
+name: PR Build
+
+on:
+  pull_request:
+
+jobs:
+  hister:
+    name: Hister binary build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Check for Go/frontend changes
+        id: changes
+        run: |
+          FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- '*.go' 'go.mod' 'go.sum' 'webui/**' 'package.json' 'package-lock.json')
+          if [ -z "$FILES" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Go
+        if: steps.changes.outputs.skip != 'true'
+        uses: actions/setup-go@v7
+        with:
+          go-version: 'stable'
+
+      - name: Set up Node
+        if: steps.changes.outputs.skip != 'true'
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: latest
+
+      - name: Build SPA
+        if: steps.changes.outputs.skip != 'true'
+        run: npm ci && sh webui/build.sh
+
+      - name: Build Go binary
+        if: steps.changes.outputs.skip != 'true'
+        run: go build ./...
+
+  website:
+    name: Website build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Check for website/component changes
+        id: changes
+        run: |
+          FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'webui/website/**' 'webui/components/**' 'package.json' 'package-lock.json')
+          if [ -z "$FILES" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Node
+        if: steps.changes.outputs.skip != 'true'
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: latest
+
+      - name: Install dependencies
+        if: steps.changes.outputs.skip != 'true'
+        run: npm ci
+
+      - name: Build website
+        if: steps.changes.outputs.skip != 'true'
+        run: npm run build -w @hister/website
+
+  ext:
+    name: Browser extension build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Check for ext/component changes
+        id: changes
+        run: |
+          FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'webui/ext/**' 'webui/components/**' 'package.json' 'package-lock.json')
+          if [ -z "$FILES" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Set up Node
+        if: steps.changes.outputs.skip != 'true'
+        uses: actions/setup-node@v7.0.0
+        with:
+          node-version: latest
+
+      - name: Install dependencies
+        if: steps.changes.outputs.skip != 'true'
+        run: npm ci
+
+      - name: Build extension
+        if: steps.changes.outputs.skip != 'true'
+        run: npm run build -w @hister/ext

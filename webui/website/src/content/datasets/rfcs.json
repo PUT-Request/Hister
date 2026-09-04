@@ -1,0 +1,12 @@
+{
+  "name": "RFCs",
+  "description": "It contains all the RFCs, including inline-errata",
+  "downloadUrl": "/data/rfcs.json.7z",
+  "image": null,
+  "tags": ["rfc", "standard"],
+  "license": "TLP",
+  "author": "RFC Editor",
+  "diskSizeBytes": 1647025877,
+  "documentCount": 11515,
+  "latestUpdate": "2026.07.04"
+}

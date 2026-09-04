@@ -1,0 +1,12 @@
+{
+  "name": "Powershell Documentation",
+  "description": "Documentation pages for Powershell. Powershell version: 7.6. ",
+  "downloadUrl": "/data/powershell.json.7z",
+  "image": null,
+  "tags": ["powershell", "documentation"],
+  "license": "Unknown",
+  "author": "Microsoft",
+  "diskSizeBytes": null,
+  "documentCount": 1038,
+  "latestUpdate": "2026.06.07"
+}

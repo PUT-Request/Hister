@@ -1,0 +1,57 @@
+{
+  "manifest_version": 3,
+  "name": "Hister",
+  "version": "0.1.0",
+  "description": "Web history on steroids",
+  "icons": {
+    "128": "assets/icons/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "128": "assets/icons/icon128.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Hister"
+  },
+  "commands": {
+    "index-current-page": {
+      "suggested_key": {
+        "default": "Ctrl+I",
+        "mac": "Command+I"
+      },
+      "description": "Index current page"
+    },
+    "disable-indexing-current-page": {
+      "suggested_key": {
+        "default": "Ctrl+B",
+        "mac": "Command+B"
+      },
+      "description": "Disable indexing for current page"
+    },
+    "disable-indexing-current-domain": {
+      "suggested_key": {
+        "default": "Ctrl+Y",
+        "mac": "Command+Y"
+      },
+      "description": "Disable indexing for current domain"
+    }
+  },
+  "content_scripts": [
+    {
+      "js": ["content.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {},
+  "options_page": "options.html",
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": [],
+      "extension_ids": []
+    }
+  ],
+  "permissions": ["tabs", "storage", "cookies"],
+  "host_permissions": ["*://*/*"],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzYzQnIbG0kNUBUIrsGGF3x8G8Rz6iy9X5pcxeru+uaxCejx9vm8Sy9frzH8qhs/WWTaqnlyFbvkrL0NxPFfYw7hulP5ew9WNzqk4DJ/rEZHAF9eNhvtMJbIdLRwg6yZiIGmZ+kaCEPKQu+IyHuBMFZNt+n5I/uMEMO9gI5OmK/Z17bQAGVdqlVubqPLTYz4mmtjHhNUK5JGChIHUP238a1X+M87K6QwJNX9lbyXTBCojrYwcgRBWB02IBoevqHoA+wKOCgL6ExGhdkj9N0ons/cUqLvJCop/H3iIl39KCbfKiI5Fc+neOXpa6bzZlfX7EC6kt4J/i/FLncLQUcQbywIDAQAB"
+}

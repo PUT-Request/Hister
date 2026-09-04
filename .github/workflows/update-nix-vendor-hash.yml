@@ -1,0 +1,57 @@
+name: Update Nix hashes
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - go.mod
+      - go.sum
+      - package.json
+      - package-lock.json
+      - nix/package.nix
+      - .github/workflows/update-nix-vendor-hash.yml
+      - nix/update-nix-vendor-hash.sh
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-hashes:
+    if: github.repository == 'asciimoo/hister'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31.11.1
+
+      - name: Update Nix hashes
+        run: ./nix/update-nix-vendor-hash.sh
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          if git diff --quiet nix/package.nix; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.git-check.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v8.1.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: update-nix-hashes
+          commit-message: '[chore] update Nix hashes for Go/NPM changes'
+          title: 'Update Nix hashes'
+          body: |
+            [chore] update nix/package.nix hashes (vendorHash and/or npmDepsHash)
+
+            Triggered by: ${{ github.repository }}@${{ github.sha }}
+          delete-branch: true

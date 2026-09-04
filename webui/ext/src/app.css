@@ -1,0 +1,57 @@
+@import '@fontsource/outfit/400.css';
+@import '@fontsource/outfit/600.css';
+@import '@fontsource/outfit/700.css';
+@import '@fontsource/outfit/900.css';
+@import '@fontsource/fira-code/400.css';
+@import '@fontsource/fira-code/500.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+@import '@fontsource/inter/600.css';
+@import '@fontsource/inter/700.css';
+@import 'tw-animate-css';
+@import '@hister/components/colors.css';
+@source '../../components/src';
+
+@layer base {
+  * {
+    box-sizing: inherit;
+  }
+
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-page-bg);
+    color: var(--color-text-brand);
+  }
+
+  a {
+    color: var(--color-hister-indigo);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  code {
+    background-color: var(--color-muted-surface);
+    padding: 0 0.2em;
+    border-radius: 0;
+  }
+
+  kbd {
+    background-color: var(--color-muted-surface);
+    border: 1px solid var(--color-border-brand);
+    border-radius: 0;
+    padding: 0.3em 0.7em;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85em;
+    box-shadow: 0 2px 0 var(--color-border-brand);
+  }
+}

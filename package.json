@@ -1,0 +1,28 @@
+{
+  "name": "hister",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve:app": "npm -w @hister/app run serve --",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "fallow",
+    "check": "npm run format:check && npm run lint"
+  },
+  "workspaces": [
+    "webui/app",
+    "webui/website",
+    "webui/components",
+    "webui/ext"
+  ],
+  "devDependencies": {
+    "@types/node": "^26.2.0",
+    "fallow": "^3.17.0",
+    "prettier": "^3.9.6",
+    "prettier-plugin-svelte": "^4.1.1",
+    "prettier-plugin-tailwindcss": "^0.8.1"
+  },
+  "overrides": {
+    "cookie": "0.7.2"
+  }
+}

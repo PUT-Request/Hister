@@ -1,0 +1,12 @@
+{
+  "name": "MDN CSS Reference",
+  "description": "Mozilla Developer Resources - Use this CSS reference to browse an alphabetical index of all of the standard CSS properties, pseudo-classes, pseudo-elements, data types, functional notations and at-rules",
+  "downloadUrl": "/data/mdn-css.json.7z",
+  "image": null,
+  "tags": ["CSS", "reference"],
+  "license": "CC-BY-SA 2.5",
+  "author": "Mozilla",
+  "diskSizeBytes": null,
+  "documentCount": 1005,
+  "latestUpdate": "2026.06.02"
+}

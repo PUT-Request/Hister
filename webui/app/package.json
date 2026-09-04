@@ -1,0 +1,33 @@
+{
+  "name": "@hister/app",
+  "version": "0.18.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite dev",
+    "preview": "vite preview",
+    "serve": "sh ../dev-serve.sh"
+  },
+  "devDependencies": {
+    "@sveltejs/adapter-static": "^3.0.10",
+    "@sveltejs/kit": "^2.70.3",
+    "@sveltejs/vite-plugin-svelte": "^7.3.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "svelte": "^5.56.10",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
+  },
+  "dependencies": {
+    "@fontsource/fira-code": "^5.3.0",
+    "@fontsource/inter": "^5.3.0",
+    "@fontsource/outfit": "^5.3.0",
+    "@fontsource/space-grotesk": "^5.3.0",
+    "@hister/components": "^1.0.0",
+    "@lucide/svelte": "^1.33.0",
+    "@tailwindcss/typography": "^0.5.20",
+    "animejs": "^4.5.0",
+    "mode-watcher": "^1.1.0"
+  }
+}

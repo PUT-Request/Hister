@@ -1,0 +1,92 @@
+name: PR Build
+
+on:
+  pull_request:
+
+jobs:
+  hister:
+    name: Hister binary build
+    runs-on: codeberg-tiny
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Check for Go/frontend changes
+        id: changes
+        run: |
+          FILES=$(git diff --name-only origin/${{ forgejo.base_ref }}...HEAD -- '*.go' 'go.mod' 'go.sum' 'webui/**' 'package.json' 'package-lock.json')
+          if [ -z "$FILES" ]; then
+            echo "skip=true" >> "$FORGEJO_OUTPUT"
+          else
+            echo "skip=false" >> "$FORGEJO_OUTPUT"
+          fi
+
+      - name: Set up Go
+        if: steps.changes.outputs.skip != 'true'
+        uses: actions/setup-go@v6.3.0
+        with:
+          go-version: 'stable'
+
+      - name: Build SPA
+        if: steps.changes.outputs.skip != 'true'
+        run: npm ci && sh webui/build.sh
+
+      - name: Build Go binary
+        if: steps.changes.outputs.skip != 'true'
+        run: go build ./...
+
+  website:
+    name: Website build
+    runs-on: codeberg-tiny
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Check for website/component changes
+        id: changes
+        run: |
+          FILES=$(git diff --name-only origin/${{ forgejo.base_ref }}...HEAD -- 'webui/website/**' 'webui/components/**' 'package.json' 'package-lock.json')
+          if [ -z "$FILES" ]; then
+            echo "skip=true" >> "$FORGEJO_OUTPUT"
+          else
+            echo "skip=false" >> "$FORGEJO_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        if: steps.changes.outputs.skip != 'true'
+        run: npm ci
+
+      - name: Build website
+        if: steps.changes.outputs.skip != 'true'
+        run: npm run build -w @hister/website
+
+  ext:
+    name: Browser extension build
+    runs-on: codeberg-tiny
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0
+
+      - name: Check for ext/component changes
+        id: changes
+        run: |
+          FILES=$(git diff --name-only origin/${{ forgejo.base_ref }}...HEAD -- 'webui/ext/**' 'webui/components/**' 'package.json' 'package-lock.json')
+          if [ -z "$FILES" ]; then
+            echo "skip=true" >> "$FORGEJO_OUTPUT"
+          else
+            echo "skip=false" >> "$FORGEJO_OUTPUT"
+          fi
+
+      - name: Install dependencies
+        if: steps.changes.outputs.skip != 'true'
+        run: npm ci
+
+      - name: Build extension
+        if: steps.changes.outputs.skip != 'true'
+        run: npm run build -w @hister/ext

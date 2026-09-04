@@ -1,0 +1,372 @@
+version: 1
+
+cases:
+  - name: discourse_julia_topic_http
+    url: https://discourse.julialang.org/t/julia-discourse-advice/104150
+    backend: http
+    extractor: Discourse
+    timeout: 20
+    expect:
+      title_contains:
+        - Julia Discourse advice
+      text_contains:
+        - Julia Discourse advice
+        - Accepted Solution
+      min_text_length: 2000
+      metadata:
+        type: discourse
+        topic_id: '104150'
+        category: New to Julia
+        accepted_answer: 3
+      metadata_minimums:
+        posts: 5
+        replies: 4
+      absent_metadata:
+        - jsonld
+      preview_contains:
+        - Original post
+        - accepted solution
+      preview_not_contains:
+        - <script
+      min_preview_length: 1000
+
+  - name: discourse_python_topic_chromedp
+    url: https://discuss.python.org/t/intro-best-place-to-start-contributing/77701
+    backend: chromedp
+    extractor: Discourse
+    timeout: 30
+    expect:
+      title_contains:
+        - Intro & best place to start contributing?
+      text_contains:
+        - cybersecurity
+      min_text_length: 500
+      metadata:
+        type: discourse
+        topic_id: '77701'
+      metadata_minimums:
+        posts: 2
+      absent_metadata:
+        - jsonld
+
+  - name: discourse_category_rejected
+    url: https://discourse.julialang.org/c/usage/6
+    backend: http
+    extractor: Discourse
+    timeout: 20
+    match: false
+
+  - name: wikipedia_article_http
+    url: https://en.wikipedia.org/wiki/Web_scraping
+    backend: http
+    extractor: Wikipedia
+    timeout: 20
+    expect:
+      title_contains:
+        - Web scraping
+      text_contains:
+        - Web scraping
+      min_text_length: 1000
+      metadata:
+        type: Article
+      min_preview_length: 500
+      preview_not_contains:
+        - <script
+
+  - name: godoc_package_http
+    url: https://pkg.go.dev/net/http
+    backend: http
+    extractor: GoDoc
+    timeout: 20
+    extract_decision: fallback
+    run_chain: false
+    expect:
+      preview_contains:
+        - Package http
+      min_preview_length: 1000
+      preview_not_contains:
+        - <script
+
+  - name: jsonld_wikipedia_article_http
+    url: https://en.wikipedia.org/wiki/Web_scraping
+    backend: http
+    extractor: JSONLD
+    timeout: 20
+    extract_decision: fallback
+    run_chain: false
+    expect:
+      metadata:
+        type: Article
+
+  - name: markdown_go_readme_http
+    url: https://github.com/golang/go/blob/master/README.md
+    document_url: file:///README.md
+    backend: http
+    extractor: Markdown
+    timeout: 20
+    extract_decision: fallback
+    run_chain: false
+    expect:
+      preview_contains:
+        - The Go Programming Language
+      min_preview_length: 500
+
+  - name: orgmode_orgpaper_readme_http
+    url: https://github.com/vikasrawal/orgpaper/blob/master/README.org
+    document_url: file:///README.org
+    backend: http
+    extractor: OrgMode
+    timeout: 20
+    extract_decision: fallback
+    run_chain: false
+    expect:
+      preview_contains:
+        - orgpaper/README.org
+      min_preview_length: 500
+
+  - name: embedded_video_w3schools_http
+    url: https://en.wikipedia.org/wiki/Big_Buck_Bunny
+    backend: http
+    extractor: EmbeddedVideo
+    timeout: 20
+    extract_decision: fallback
+    run_chain: false
+    expect:
+      metadata_contains:
+        videos:
+          - .webm
+
+  - name: reddit_hister_post_http
+    url: https://web.archive.org/web/20260602050533/https://www.reddit.com/r/selfhosted/comments/1sl5dzx/hister_selfhosted_search_engine_for_webpages_and/?solution=7eb1c86f600f0b6f7eb1c86f600f0b6f&js_challenge=1&token=7afd7253fec22262ff1c52b1703fe9ec157979821152dd903b0dac1fe2feddae&jsc_orig_r=
+    document_url: https://www.reddit.com/r/selfhosted/comments/1sl5dzx/hister_selfhosted_search_engine_for_webpages_and/
+    backend: http
+    extractor: Reddit
+    timeout: 30
+    expect:
+      title_contains:
+        - Hister
+        - self-hosted search engine
+      text_contains:
+        - reduce my dependence on online search engines
+      min_text_length: 1000
+      metadata:
+        type: reddit
+        post_id: 1sl5dzx
+        subreddit: r/selfhosted
+      preview_contains:
+        - Hister
+      min_preview_length: 500
+
+  - name: stackexchange_stackapps_chromedp
+    url: https://stackapps.com/questions/1/api-documentation-and-help
+    backend: chromedp
+    backend_options:
+      capture_delay: 1
+    extractor: StackExchange
+    timeout: 35
+    expect:
+      title_contains:
+        - API Documentation and Help
+      text_contains:
+        - All API methods
+        - Authentication
+      min_text_length: 500
+      metadata_minimums:
+        answers: 3
+      preview_contains:
+        - Question
+        - Answer #1
+      min_preview_length: 500
+
+  - name: github_hister_issue_http
+    url: https://github.com/asciimoo/hister/issues/1
+    backend: http
+    extractor: GitHub
+    timeout: 20
+    expect:
+      title_contains:
+        - Implement infinite scroll for results
+      text_contains:
+        - Pass an offset to the server
+      min_text_length: 50
+      metadata:
+        type: Issue
+        repo: asciimoo/hister
+
+  - name: hackernews_item_archive_http
+    url: https://web.archive.org/web/20260821112419/https://news.ycombinator.com/item?id=8863
+    document_url: https://news.ycombinator.com/item?id=8863
+    backend: http
+    extractor: HackerNews
+    timeout: 20
+    run_chain: false
+    expect:
+      title_contains:
+        - Dropbox - Throw away your USB drive
+      text_contains:
+        - 104 points
+        - by dhouston
+        - curlftpfs
+      min_text_length: 1000
+      preview_contains:
+        - Comments
+        - dhouston
+      min_preview_length: 1000
+  - name: lobsters_story_archive_http
+    url: https://web.archive.org/web/20260210164115/https://lobste.rs/s/ogr30w/how_i_cut_my_google_search_dependence_half
+    document_url: https://lobste.rs/s/ogr30w/how_i_cut_my_google_search_dependence_half
+    backend: http
+    extractor: Lobsters
+    timeout: 20
+    run_chain: false
+    expect:
+      title_contains:
+        - How I Cut My Google Search Dependence in Half
+      text_contains:
+        - submitted by asciimoo
+        - That tool sounds helpful
+      min_text_length: 1000
+      preview_contains:
+        - Comments
+        - try Kagi
+      min_preview_length: 1000
+
+  - name: mastodon_release_status_chromedp
+    url: https://mastodon.social/@Mastodon/114818205314251502/embed
+    document_url: https://mastodon.social/@Mastodon/114818205314251502
+    backend: chromedp
+    backend_options:
+      capture_delay: 3
+    extractor: Mastodon
+    timeout: 35
+    expect:
+      skip_indexing: true
+      min_extra_documents: 1
+      extra_title_contains:
+        - Mastodon toot
+      extra_text_contains:
+        - Mastodon 4.4
+
+  - name: bluesky_post_thread_http
+    url: https://bsky.app/profile/bsky.app/post/3mtcnex43tk24
+    backend: http
+    extractor: Bluesky
+    timeout: 20
+    expect:
+      skip_indexing: true
+      min_extra_documents: 2
+      extra_title_contains:
+        - Bluesky post
+      extra_text_contains:
+        - service problems
+
+  - name: bluesky_custom_feed_chromedp
+    url: https://bsky.app/profile/emily.space/feed/astro
+    backend: chromedp
+    backend_options:
+      capture_delay: 8
+    extractor: Bluesky
+    timeout: 35
+    expect:
+      skip_indexing: true
+      min_extra_documents: 5
+      extra_title_contains:
+        - Bluesky post
+
+  - name: twitter_github_status_chromedp
+    url: https://platform.twitter.com/embed/Tweet.html?id=2026043597653438700
+    document_url: https://x.com/githubstatus/status/2026043597653438700
+    backend: chromedp
+    backend_options:
+      capture_delay: 3
+    extractor: Twitter
+    timeout: 35
+    expect:
+      skip_indexing: true
+      min_extra_documents: 1
+      extra_title_contains:
+        - GitHub Status
+      extra_text_contains:
+        - degraded performance
+
+  - name: notion_guest_guide_chromedp
+    url: https://help-support.notion.site/0db4500bd3e74c1884b7e83f7c9de6f3
+    backend: chromedp
+    backend_options:
+      capture_delay: 5
+    extractor: Notion
+    timeout: 40
+    expect:
+      title_contains:
+        - 公开页面和发布
+      text_contains:
+        - Share to web
+      min_text_length: 500
+      preview_contains:
+        - Share to web
+      min_preview_length: 500
+
+  - name: chatgpt_public_share_chromedp
+    url: https://chatgpt.com/share/6a6a1580-8e2c-83e8-ad79-4017715b7f6f
+    backend: chromedp
+    backend_options:
+      capture_delay: 3
+    extractor: ChatGPT
+    timeout: 35
+    expect:
+      title_contains:
+        - Sleep Optimization Discussion
+      text_contains:
+        - "User:"
+        - "Assistant:"
+      min_text_length: 100
+      preview_contains:
+        - User
+        - Assistant
+      min_preview_length: 100
+
+  - name: ytdlp_archive_big_buck_bunny
+    url: https://archive.org/details/BigBuckBunny_328
+    fetch: false
+    extractor: Ytdlp
+    requires_binary: yt-dlp
+    timeout: 30
+    run_chain: false
+    expect:
+      title_contains:
+        - Big Buck Bunny
+      min_text_length: 50
+      metadata_minimums:
+        duration: 500
+      preview_contains:
+        - Big Buck Bunny
+      min_preview_length: 100
+
+  - name: readability_wikipedia_article_http
+    url: https://en.wikipedia.org/wiki/Web_scraping
+    backend: http
+    extractor: Readability
+    timeout: 20
+    run_chain: false
+    expect:
+      title_contains:
+        - Web scraping
+      text_contains:
+        - Web scraping
+      min_text_length: 1000
+      min_preview_length: 500
+      preview_not_contains:
+        - <script
+
+  - name: basic_example_domain_http
+    url: https://example.com/
+    backend: http
+    extractor: Basic
+    timeout: 20
+    run_chain: false
+    expect:
+      title_contains:
+        - Example Domain
+      text_contains:
+        - documentation examples
+      min_text_length: 100

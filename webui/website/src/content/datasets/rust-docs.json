@@ -1,0 +1,12 @@
+{
+  "name": "Rust Standard Library and Book Documentation",
+  "description": "Documentation pages for the Rust standard library and The Rust Programming Language book from doc.rust-lang.org.",
+  "downloadUrl": "/data/rust-docs.json.7z",
+  "image": null,
+  "tags": ["rust", "documentation", "reference"],
+  "license": "MIT OR Apache-2.0",
+  "author": "Rust Project Developers",
+  "diskSizeBytes": null,
+  "documentCount": 2345,
+  "latestUpdate": "2026.06.24"
+}

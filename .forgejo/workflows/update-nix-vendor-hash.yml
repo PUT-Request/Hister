@@ -1,0 +1,46 @@
+name: Update Nix hashes
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-hashes:
+    if: forgejo.repository == 'asciimoo/hister'
+    runs-on: runner_name
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31.10.6
+
+      - name: Update Nix hashes
+        run: ./nix/update-nix-vendor-hash.sh
+
+      - name: Check for changes
+        id: git-check
+        run: |
+          if git diff --quiet nix/package.nix; then
+            echo "changed=false" >> $FORGEJO_OUTPUT
+          else
+            echo "changed=true" >> $FORGEJO_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.git-check.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v8.1.1
+        with:
+          token: ${{ secrets.FORGEJO_TOKEN }}
+          branch: update-nix-hashes
+          commit-message: '[chore] update Nix hashes for Go/NPM changes'
+          title: 'Update Nix hashes'
+          body: |
+            [chore] update nix/package.nix hashes (vendorHash and/or npmDepsHash)
+
+            Triggered by: ${{ forgejo.repository }}@${{ forgejo.sha }}
+          delete-branch: true
