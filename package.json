@@ -16,10 +16,10 @@
     "webui/ext"
   ],
   "devDependencies": {
-    "@types/node": "^26.2.0",
-    "fallow": "^3.17.0",
-    "prettier": "^3.9.6",
-    "prettier-plugin-svelte": "^4.1.1",
+    "@types/node": "^26.6.6",
+    "fallow": "^3.45.0",
+    "prettier": "^3.10.1",
+    "prettier-plugin-svelte": "^4.2.0",
     "prettier-plugin-tailwindcss": "^0.8.1"
   },
   "overrides": {
